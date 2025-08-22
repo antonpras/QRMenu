@@ -1,0 +1,17 @@
+[project]
+name = "qrmenu-plus-backend"
+version = "0.1.1"
+description = "QRMenu+ SaaS backend (FastAPI + SQLite + R2 presign + QR + Subscription) - Zeabur ready"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "python-multipart",
+    "passlib[bcrypt]",
+    "pyjwt",
+    "boto3",
+    "segno",
+    "sqlmodel",
+    "pydantic-settings",
+    "httpx",
+]

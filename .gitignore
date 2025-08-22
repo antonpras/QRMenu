@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+qrmenu.db
+.DS_Store
