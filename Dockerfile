@@ -7,7 +7,7 @@ WORKDIR /app
 COPY pyproject.toml .
 RUN python -m pip install --upgrade pip && \
     pip install fastapi "uvicorn[standard]" python-multipart passlib[bcrypt] pyjwt \
-                boto3 segno sqlmodel pydantic-settings httpx
+                boto3 segno sqlmodel pydantic-settings httpx email-validator
 COPY app ./app
 EXPOSE 7860
 CMD ["bash","-lc","uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-7860}"]
