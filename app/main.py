@@ -18,4 +18,14 @@ def create_app():
     app.include_router(billing_router)
     app.include_router(billing_webhook_router)
     return app
+    
 app = create_app()
+
+@app.get("/", tags=["health"])
+def root():
+    return {
+        "service": "QRMenu+ Backend",
+        "version": "0.1.0",
+        "docs": "/docs",
+        "status": "running"
+    }
