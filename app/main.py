@@ -5,6 +5,7 @@ from .cafes.router import router as cafes_router
 from .menu.router import router as menu_router
 from .media.router import router as media_router
 from .qr.router import router as qr_router
+from .public.router import router as public_router
 from .billing.router import router as billing_router
 from .billing.webhook import router as billing_webhook_router
 def create_app():
@@ -12,6 +13,7 @@ def create_app():
     app = FastAPI(title="QRMenu+ Backend (Zeabur)")
     app.include_router(auth_router)
     app.include_router(cafes_router)
+    app.include_router(public_router)
     app.include_router(menu_router)
     app.include_router(media_router)
     app.include_router(qr_router)
@@ -20,6 +22,7 @@ def create_app():
     return app
     
 app = create_app()
+
 
 @app.get("/", tags=["health"])
 def root():
