@@ -12,6 +12,7 @@ dependencies = [
     "boto3",
     "segno",
     "sqlmodel",
+    "email-validator",
     "pydantic-settings",
     "httpx",
 ]
