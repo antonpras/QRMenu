@@ -9,6 +9,7 @@ dependencies = [
     "python-multipart",
     "passlib[bcrypt]",
     "pyjwt",
+    "jinja2",
     "boto3",
     "segno",
     "sqlmodel",
