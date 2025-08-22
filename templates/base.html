@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}{{ cafe.name if cafe else "QRMenu" }}{% endblock %}</title>
+
+  <!-- Tailwind via CDN (jit) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#0ea5e9', dark: '#0284c7' },
+            ink: '#0f172a'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Alpine.js untuk interaksi ringan -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <link rel="icon" href="/static/favicon.svg">
+  <style>
+    .glass { backdrop-filter: blur(8px); background: rgba(255,255,255,.65); }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp:2; -webkit-box-orient: vertical; overflow: hidden; }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body class="bg-slate-50 text-ink">
+  <header class="sticky top-0 z-30 glass border-b border-slate-200">
+    <div class="mx-auto max-w-5xl px-4 py-3 flex items-center gap-3">
+      <img src="/static/logo.svg" alt="logo" class="w-7 h-7" />
+      <div class="flex-1">
+        <h1 class="text-lg font-semibold leading-tight">{{ cafe.name if cafe else 'QRMenu' }}</h1>
+        <p class="text-xs text-slate-500">Scan & order with ease</p>
+      </div>
+      <a href="https://t.me/Archived405" class="text-sm text-brand hover:text-brand-dark">Support</a>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-4 py-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="mx-auto max-w-5xl px-4 py-10 text-center text-xs text-slate-400">
+    © {{ 2025 }} QRMenu — crafted by Archived405
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
