@@ -13,6 +13,7 @@ dependencies = [
     "boto3",
     "segno",
     "sqlmodel",
+    "python-jose = { extras = ["cryptography"], version = "^3.3.0" }",
     "email-validator",
     "pydantic-settings",
     "httpx",
