@@ -1,0 +1,38 @@
+{% extends "owner/_layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block header %}Dashboard{% endblock %}
+{% block content %}
+<div class="mb-4 flex items-center justify-between">
+  <h2 class="text-xl font-semibold">Cafe Saya</h2>
+  <button x-data @click="$dispatch('open-new')" class="bg-brand text-white px-4 py-2 rounded-xl">Buat Cafe</button>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+  {% for c in cafes %}
+  <a href="/owner/cafes/{{ c.id }}" class="bg-white border rounded-2xl p-4 hover:border-brand">
+    <div class="font-semibold">{{ c.name }}</div>
+    <div class="text-sm text-slate-500">/{{ c.slug }}</div>
+  </a>
+  {% else %}
+  <div class="text-slate-500">Belum ada cafe.</div>
+  {% endfor %}
+</div>
+
+<!-- Modal New Cafe -->
+<div x-data="{open:false}" x-on:open-new.window="open=true">
+  <div x-show="open" class="fixed inset-0 bg-black/30" @click="open=false"></div>
+  <div x-show="open" class="fixed inset-0 flex items-center justify-center p-4">
+    <form method="post" action="/owner/cafes/create" class="bg-white rounded-2xl p-5 w-full max-w-md space-y-3">
+      <h3 class="font-semibold text-lg">Buat Cafe</h3>
+      <input name="name" placeholder="Nama" class="border rounded-lg px-3 py-2 w-full" required>
+      <input name="slug" placeholder="Slug (opsional)" class="border rounded-lg px-3 py-2 w-full">
+      <input name="brand_color" placeholder="Brand color (#xxxxxx)" class="border rounded-lg px-3 py-2 w-full">
+      <input name="wa_phone" placeholder="No WA kasir (62…)" class="border rounded-lg px-3 py-2 w-full">
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" @click="open=false" class="px-4 py-2 rounded-lg border">Batal</button>
+        <button class="bg-brand text-white px-4 py-2 rounded-lg">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
