@@ -1,0 +1,83 @@
+{% extends "owner/_layout.html" %}
+{% block title %}Kelola {{ cafe.name }}{% endblock %}
+{% block header %}Kelola • {{ cafe.name }}{% endblock %}
+{% block content %}
+<div class="mb-4 flex items-center justify-between">
+  <div>
+    <div class="text-sm text-slate-500">Public: <a class="text-blue-600" href="/m/{{ cafe.slug }}" target="_blank">/m/{{ cafe.slug }}</a></div>
+  </div>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-4">
+  <!-- Kategori -->
+  <section class="bg-white border rounded-2xl p-4">
+    <h3 class="font-semibold mb-3">Kategori</h3>
+    <form hx-post="/owner/api/categories/create" hx-target="#cat-list" hx-swap="beforeend" class="flex gap-2 mb-3">
+      <input type="hidden" name="cafe_id" value="{{ cafe.id }}">
+      <input name="name" placeholder="Nama kategori" class="border rounded-lg px-3 py-2 flex-1" required>
+      <input name="sort" type="number" value="1" class="border rounded-lg px-3 py-2 w-24">
+      <button class="bg-brand text-white px-4 py-2 rounded-lg">Tambah</button>
+    </form>
+    <ul id="cat-list" class="space-y-2">
+      {% for cat in categories %}
+        {% include "owner/partials/category_row.html" %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- Items -->
+  <section class="bg-white border rounded-2xl p-4 lg:col-span-2">
+    <div class="flex items-center justify-between">
+      <h3 class="font-semibold mb-3">Menu Item</h3>
+      <input id="search" placeholder="Cari..." class="border rounded-lg px-3 py-2">
+    </div>
+    <form hx-post="/owner/api/items/create" hx-target="#item-list" hx-swap="beforeend"
+          class="grid md:grid-cols-5 gap-2 mb-4">
+      <input type="hidden" name="cafe_id" value="{{ cafe.id }}">
+      <select name="category_id" class="border rounded-lg px-3 py-2">
+        {% for cat in categories %}<option value="{{ cat.id }}">{{ cat.name }}</option>{% endfor %}
+      </select>
+      <input name="name" placeholder="Nama item" class="border rounded-lg px-3 py-2" required>
+      <input name="price_cents" type="number" placeholder="Harga" class="border rounded-lg px-3 py-2" required>
+      <input name="description" placeholder="Deskripsi" class="border rounded-lg px-3 py-2">
+      <button class="bg-brand text-white px-4 py-2 rounded-lg">Tambah</button>
+    </form>
+
+    <div id="item-list" class="grid md:grid-cols-2 gap-3">
+      {% for it in items %}
+        {% include "owner/partials/item_card.html" %}
+      {% endfor %}
+    </div>
+
+    <div class="text-sm text-slate-500 mt-3">Tips: drag & drop kartu item untuk mengubah urutan.</div>
+  </section>
+</div>
+
+<script>
+window.addEventListener('load', ()=>{
+  // Search filter
+  const q = document.getElementById('search');
+  q && q.addEventListener('input', ()=>{
+    const term = q.value.toLowerCase();
+    document.querySelectorAll('#item-list [data-id]').forEach(card=>{
+      const txt = card.textContent.toLowerCase();
+      card.style.display = txt.includes(term) ? '' : 'none';
+    });
+  });
+  // Drag sort
+  const el = document.getElementById('item-list');
+  if (el && window.Sortable){
+    new Sortable(el, {
+      animation: 150,
+      onEnd: ()=>{
+        const ids = [...el.querySelectorAll('[data-id]')].map(x=>x.dataset.id).join(',');
+        fetch('/owner/api/items/reorder', {method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body: new URLSearchParams({cafe_id: '{{ cafe.id }}', ids})})
+        .then(()=>toast('Urutan disimpan'));
+      }
+    });
+  }
+});
+</script>
+{% endblock %}
