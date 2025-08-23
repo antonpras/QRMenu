@@ -2,6 +2,9 @@ from fastapi import APIRouter, Depends, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
+from .service import presign_upload
+pre = presign_upload("image/jpeg", f"cafes/{cafe.id}/menu/{item.id}/{filename}")
+
 from ..db import get_session, Cafe, Category, MenuItem
 
 router = APIRouter()

@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from sqlmodel import Session, select
 from ..deps import get_current_user, CurrentUser
 from ..db import Cafe, Subscription, get_session
+from .service import presign_upload
+pre = presign_upload("image/jpeg", f"cafes/{cafe.id}/menu/{item.id}/{filename}")
 from ..utils import slugify
 router = APIRouter(prefix="/cafes", tags=["cafes"])
 class CafeIn(BaseModel):

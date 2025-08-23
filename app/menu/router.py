@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from typing import Optional
 from sqlmodel import Session, select
 from ..deps import get_current_user, CurrentUser
+from .service import presign_upload
+pre = presign_upload("image/jpeg", f"cafes/{cafe.id}/menu/{item.id}/{filename}")
 from ..db import Cafe, Category, MenuItem, get_session
 router = APIRouter(prefix="/menu", tags=["menu"])
 class CategoryIn(BaseModel):

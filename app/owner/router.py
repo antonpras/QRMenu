@@ -3,10 +3,13 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
 from ..db import get_session
-from ..owner.deps import get_current_user_from_cookie
+from .deps import get_current_user_from_cookie
 from ..cafes.models import Cafe
 from ..menu.models import Category, MenuItem
-from ..media.router import presign_upload  # fungsi presign yang sudah ada
+from ..media.router import presign_upload  
+from .service import presign_upload
+pre = presign_upload("image/jpeg", f"cafes/{cafe.id}/menu/{item.id}/{filename}")
+# fungsi presign yang sudah ada
 import os, httpx
 
 templates = Jinja2Templates(directory="templates")

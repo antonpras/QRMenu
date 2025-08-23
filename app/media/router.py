@@ -1,5 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from .service import presign_upload
+pre = presign_upload("image/jpeg", f"cafes/{cafe.id}/menu/{item.id}/{filename}")
 import boto3, uuid
 from ..config import settings
 router = APIRouter(prefix="/media", tags=["media"])

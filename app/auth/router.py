@@ -5,6 +5,8 @@ from passlib.hash import bcrypt
 import jwt
 from datetime import datetime, timedelta
 from ..db import User, get_session
+from .service import presign_upload
+pre = presign_upload("image/jpeg", f"cafes/{cafe.id}/menu/{item.id}/{filename}")
 from ..config import settings
 router = APIRouter(prefix="/auth", tags=["auth"])
 class RegisterIn(BaseModel):

@@ -1,5 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+from .service import presign_upload
+pre = presign_upload("image/jpeg", f"cafes/{cafe.id}/menu/{item.id}/{filename}")
 import time, hashlib
 router = APIRouter(prefix="/billing", tags=["billing"])
 class CheckoutIn(BaseModel):
