@@ -1,0 +1,44 @@
+{% set brand = cafe.brand_color if cafe and cafe.brand_color else "#0ea5e9" %}
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Owner{% endblock %} • QRMenu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:"{{ brand }}"}}}}</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+  <link rel="icon" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/owner.css">
+</head>
+<body class="bg-slate-50">
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <aside class="w-64 hidden md:block bg-white border-r">
+    <div class="p-4 font-bold text-lg">QRMenu Owner</div>
+    <nav class="px-2 space-y-1">
+      <a href="/owner" class="block px-3 py-2 rounded hover:bg-slate-100">Dashboard</a>
+      {% if cafe %}
+      <a href="/owner/cafes/{{ cafe.id }}" class="block px-3 py-2 rounded hover:bg-slate-100">Cafe: {{ cafe.name }}</a>
+      {% endif %}
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1">
+    <header class="bg-white border-b px-4 py-3 flex items-center justify-between">
+      <div class="font-semibold">{% block header %}{% endblock %}</div>
+      <div class="flex items-center gap-3">
+        <a href="/owner/logout" class="text-sm text-slate-500">Logout</a>
+      </div>
+    </header>
+    <main class="p-4">{% block content %}{% endblock %}</main>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-xl hidden"></div>
+<script src="/static/owner.js"></script>
+</body>
+</html>
