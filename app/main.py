@@ -3,6 +3,7 @@ from .db import init_db
 from .auth.router import router as auth_router
 from .cafes.router import router as cafes_router
 from fastapi.staticfiles import StaticFiles
+from .owner.router import router as owner_router
 from .menu.router import router as menu_router
 from .media.router import router as media_router
 from .qr.router import router as qr_router
@@ -14,6 +15,7 @@ def create_app():
     app = FastAPI(title="QRMenu+ Backend (Zeabur)")
     app.mount("/static", StaticFiles(directory="static"), name="static")
     app.include_router(auth_router)
+    app.include_router(owner_router)
     app.include_router(cafes_router)
     app.include_router(public_router)
     app.include_router(menu_router)
