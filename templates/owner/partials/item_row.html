@@ -1,0 +1,19 @@
+<div class="border rounded-xl p-3 bg-white" data-id="{{ it.id }}">
+  <div class="flex justify-between items-start">
+    <div>
+      <div class="font-semibold">{{ it.name }}</div>
+      <div class="text-sm text-slate-500">Rp {{ "{:,.0f}".format(it.price_cents) }}</div>
+    </div>
+    <button hx-post="/owner/api/items/{{ it.id }}/toggle" hx-target="closest [data-id]" hx-swap="outerHTML"
+      class="text-xs px-2 py-1 rounded border">
+      {{ 'Nonaktifkan' if it.is_active else 'Aktifkan' }}
+    </button>
+  </div>
+  {% if it.image_url %}
+    <img src="{{ it.image_url }}" class="h-28 w-full object-cover rounded-lg mt-2">
+  {% endif %}
+  <div class="mt-2">
+    <label class="text-xs text-slate-500 mb-1 block">Upload Gambar</label>
+    <input type="file" accept="image/*" onchange="uploadItemImage({{ it.id }}, this)">
+  </div>
+</div>
