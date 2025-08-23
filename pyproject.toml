@@ -1,20 +1,48 @@
-[project]
-name = "qrmenu-plus-backend"
-version = "0.1.1"
-description = "QRMenu+ SaaS backend (FastAPI + SQLite + R2 presign + QR + Subscription) - Zeabur ready"
-requires-python = ">=3.11"
-dependencies = [
-    "fastapi",
-    "uvicorn[standard]",
-    "python-multipart",
-    "passlib[bcrypt]",
-    "pyjwt",
-    "jinja2",
-    "boto3",
-    "segno",
-    "sqlmodel",
-    "python-jose[cryptography]",
-    "email-validator",
-    "pydantic-settings",
-    "httpx",
-]
+[tool.poetry]
+name = "qrmenu"
+version = "0.1.0"
+description = "QRMenu backend (FastAPI + SQLModel) with owner panel, R2 upload, QR, Midtrans"
+authors = ["Archived405 <antoncalderon1105@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "app" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+# Web & framework
+fastapi = "^0.111.0"
+uvicorn = "^0.30.0"
+jinja2 = "^3.1.4"
+python-multipart = "^0.0.9"
+httpx = "^0.27.0"
+
+# Data layer
+sqlmodel = "^0.0.21"
+sqlalchemy = "^2.0.32"
+alembic = "^1.13.2"          # optional, tapi berguna utk migrasi
+
+# Validation & auth
+pydantic = { version = "^2.8.2", extras = ["email"] }  # bawa email-validator
+passlib = { version = "^1.7.4", extras = ["bcrypt"] }
+python-jose = { version = "^3.3.0", extras = ["cryptography"] }
+
+# Utils
+python-dotenv = "^1.0.1"
+itsdangerous = "^2.2.0"
+
+# Media / QR
+qrcode = "^7.4.2"
+Pillow = "^10.4.0"
+
+# Payments
+midtransclient = "^1.4.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"
+black = "^24.8.0"
+isort = "^5.13.2"
+mypy = "^1.10.0"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
